@@ -62,7 +62,24 @@ def precipitation():
         temp_dict["precipitation"] = result.prcp 
         all_results.append(temp_dict)
     return jsonify(all_results)
+@app.route("/api/v1.0/stations")
+def stations():
+    """Return a json list of stations from the dataset."""
+    # Query all the stations
+    results = session.query(Station).all()
 
+    # Create a dictionary from the row data and append to a list of all_stations.
+    all_stations = []
+    for stations in results:
+        stations_dict = {}
+        stations_dict["Station"] = stations.station
+        stations_dict["Station Name"] = stations.name
+        stations_dict["Latitude"] = stations.latitude
+        stations_dict["Longitude"] = stations.longitude
+        stations_dict["Elevation"] = stations.elevation
+        all_stations.append(stations_dict)
+    
+    return jsonify(all_stations)
 
 @app.route("/api/v1.0/passengers")
 def passengers():

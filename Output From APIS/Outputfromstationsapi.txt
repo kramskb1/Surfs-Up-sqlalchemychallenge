@@ -1,0 +1,66 @@
+[
+  {
+    "Elevation": 3.0, 
+    "Latitude": 21.2716, 
+    "Longitude": -157.8168, 
+    "Station": "USC00519397", 
+    "Station Name": "WAIKIKI 717.2, HI US"
+  }, 
+  {
+    "Elevation": 14.6, 
+    "Latitude": 21.4234, 
+    "Longitude": -157.8015, 
+    "Station": "USC00513117", 
+    "Station Name": "KANEOHE 838.1, HI US"
+  }, 
+  {
+    "Elevation": 7.0, 
+    "Latitude": 21.5213, 
+    "Longitude": -157.8374, 
+    "Station": "USC00514830", 
+    "Station Name": "KUALOA RANCH HEADQUARTERS 886.9, HI US"
+  }, 
+  {
+    "Elevation": 11.9, 
+    "Latitude": 21.3934, 
+    "Longitude": -157.9751, 
+    "Station": "USC00517948", 
+    "Station Name": "PEARL CITY, HI US"
+  }, 
+  {
+    "Elevation": 306.6, 
+    "Latitude": 21.4992, 
+    "Longitude": -158.0111, 
+    "Station": "USC00518838", 
+    "Station Name": "UPPER WAHIAWA 874.3, HI US"
+  }, 
+  {
+    "Elevation": 19.5, 
+    "Latitude": 21.33556, 
+    "Longitude": -157.71139, 
+    "Station": "USC00519523", 
+    "Station Name": "WAIMANALO EXPERIMENTAL FARM, HI US"
+  }, 
+  {
+    "Elevation": 32.9, 
+    "Latitude": 21.45167, 
+    "Longitude": -157.84888999999998, 
+    "Station": "USC00519281", 
+    "Station Name": "WAIHEE 837.5, HI US"
+  }, 
+  {
+    "Elevation": 0.9, 
+    "Latitude": 21.3152, 
+    "Longitude": -157.9992, 
+    "Station": "USC00511918", 
+    "Station Name": "HONOLULU OBSERVATORY 702.2, HI US"
+  }, 
+  {
+    "Elevation": 152.4, 
+    "Latitude": 21.3331, 
+    "Longitude": -157.8025, 
+    "Station": "USC00516128", 
+    "Station Name": "MANOA LYON ARBO 785.2, HI US"
+  }
+]
+

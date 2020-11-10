@@ -39,7 +39,8 @@ def welcome():
     return (
         f"Available Routes:<br/>"
         f"/api/v1.0/precipitation:<br/>"
-        f"/api/v1.0/passengers"
+        f"/api/v1.0/passengers:<br/>"
+        f"/api/v1.0/stations"
     )
 
 
@@ -64,6 +65,8 @@ def precipitation():
     return jsonify(all_results)
 @app.route("/api/v1.0/stations")
 def stations():
+    session = Session(engine)
+    prev_date=dt.date(2017,8,23) - dt.timedelta(days=365)
     """Return a json list of stations from the dataset."""
     # Query all the stations
     results = session.query(Station).all()

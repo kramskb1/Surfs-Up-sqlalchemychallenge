@@ -68,7 +68,6 @@ def precipitation():
 def passengers():
     # Create our session (link) from Python to the DB
     session = Session(engine)
-
     """Return a list of passenger data including the name, age, and sex of each passenger"""
     # Query all passengers
     results = session.query(Passenger.name, Passenger.age, Passenger.sex).all()

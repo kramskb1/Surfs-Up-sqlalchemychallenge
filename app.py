@@ -67,7 +67,7 @@ def precipitation():
 def stations():
     # Create our session (link) from Python to the DB
     session = Session(engine)
-    #prev_date=dt.date(2017,8,23) - dt.timedelta(days=365)
+    prev_date=dt.date(2017,8,23) - dt.timedelta(days=365)
     """Return a json list of stations from the dataset."""
     # Query all the stations
     results = session.query(Station).all()
@@ -91,20 +91,18 @@ def tobs():
     session = Session(engine)
     """Return a list of passenger data including the name, age, and sex of each passenger"""
     # Query all passengers
-    results = session.query(Measurement.tobs).all()
+tobs_results = session.query(Measurement.date, Measurement.tobs).\
+prev_date=dt.date(2017,8,23) - dt.timedelta(days=365)
 
-    session.close()
-
-    # Create a dictionary from the row data and append to a list of all_passengers
-    all_passengers = []
-    for name, age, sex in results:
-        passenger_dict = {}
-        passenger_dict["name"] = name
-        passenger_dict["age"] = age
-        passenger_dict["sex"] = sex
-        all_passengers.append(passenger_dict)
-
-    return jsonify(all_passengers)
+    # Create dictionaries with dates and tobs as values and keys
+tobs_totals = []
+for result in tobs_results:
+    row={}
+    row["date"] = result[0]
+	row["tobs"] = result[1]
+	tobs_totals.append(row)
+    # Return JSON List of temperature observations for previous year
+return jsonify(tobs_totals)
 
 
 if __name__ == '__main__':

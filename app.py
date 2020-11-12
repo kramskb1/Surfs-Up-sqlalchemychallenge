@@ -39,8 +39,8 @@ def welcome():
     return (
         f"Available Routes:<br/>"
         f"/api/v1.0/precipitation:<br/>"
-        f"/api/v1.0/passengers:<br/>"
-        f"/api/v1.0/stations"
+        f"/api/v1.0/stations:<br/>"
+        f"/api/v1.0/tobs"
     )
 
 
@@ -65,8 +65,9 @@ def precipitation():
     return jsonify(all_results)
 @app.route("/api/v1.0/stations")
 def stations():
+    # Create our session (link) from Python to the DB
     session = Session(engine)
-    prev_date=dt.date(2017,8,23) - dt.timedelta(days=365)
+    #prev_date=dt.date(2017,8,23) - dt.timedelta(days=365)
     """Return a json list of stations from the dataset."""
     # Query all the stations
     results = session.query(Station).all()
@@ -84,13 +85,13 @@ def stations():
     
     return jsonify(all_stations)
 
-@app.route("/api/v1.0/passengers")
-def passengers():
+@app.route("/api/v1.0/tobs")
+def tobs():
     # Create our session (link) from Python to the DB
     session = Session(engine)
     """Return a list of passenger data including the name, age, and sex of each passenger"""
     # Query all passengers
-    results = session.query(Passenger.name, Passenger.age, Passenger.sex).all()
+    results = session.query(Measurement.tobs).all()
 
     session.close()
 

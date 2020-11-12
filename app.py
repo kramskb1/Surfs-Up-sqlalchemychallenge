@@ -87,23 +87,21 @@ def stations():
 
 @app.route("/api/v1.0/tobs")
 def tobs():
-    # Create our session (link) from Python to the DB
     session = Session(engine)
-    """Return a list of passenger data including the name, age, and sex of each passenger"""
-    # Query all passengers
-tobs_results = session.query(Measurement.date, Measurement.tobs).\
-prev_date=dt.date(2017,8,23) - dt.timedelta(days=365)
+    lateststr = session.query(Measurement.date).order_by(Measurement.date.desc()).first()[0]
+    latestdate = dt.datetime.strptime(lateststr, '%Y-%m-%d')
+    querydate = dt.date(latestdate.year -1, latestdate.month, latestdate.day)
+    sel = [Measurement.date,Measurement.tobs]
+    queryresult = session.query(*sel).filter(Measurement.date >= querydate).all()
+    session.close()
 
-    # Create dictionaries with dates and tobs as values and keys
-tobs_totals = []
-for result in tobs_results:
-    row={}
-    row["date"] = result[0]
-	row["tobs"] = result[1]
-	tobs_totals.append(row)
-    # Return JSON List of temperature observations for previous year
-return jsonify(tobs_totals)
+    tobsall = []
+    for date, tobs in queryresult:
+        tobs_dict = {}
+        tobs_dict["Date"] = date
+        tobs_dict["Tobs"] = tobs
+        tobsall.append(tobs_dict)
 
-
+    return jsonify(tobsall)
 if __name__ == '__main__':
     app.run(debug=True)

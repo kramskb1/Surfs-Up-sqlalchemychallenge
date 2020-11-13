@@ -40,7 +40,7 @@ def welcome():
         f"Available Routes:<br/>"
         f"/api/v1.0/precipitation:<br/>"
         f"/api/v1.0/stations:<br/>"
-        f"/api/v1.0/tobs"
+        f"/api/v1.0/tobs:"
     )
 
 
@@ -67,7 +67,7 @@ def precipitation():
 def stations():
     # Create our session (link) from Python to the DB
     session = Session(engine)
-    prev_date=dt.date(2017,8,23) - dt.timedelta(days=365)
+    #prev_date=dt.date(2017,8,23) - dt.timedelta(days=365)
     """Return a json list of stations from the dataset."""
     # Query all the stations
     results = session.query(Station).all()

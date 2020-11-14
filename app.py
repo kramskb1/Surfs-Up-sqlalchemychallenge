@@ -41,8 +41,8 @@ def welcome():
         f"/api/v1.0/precipitation:<br/>"
         f"/api/v1.0/stations:<br/>"
         f"/api/v1.0/tobs:<br/>"
-        f"/api/v1.0/[start_date format:yyyy-mm-dd]<br/>"
-        f"/api/v1.0/[start_date format:yyyy-mm-dd]/[end_date format:yyyy-mm-dd]<br/>"
+        f"/api/v1.0/<start>:<br/>"
+        f"/api/v1.0/<start>/<end>:"
     )
 
 
@@ -115,7 +115,7 @@ def tobs():
 
     return jsonify(all_tobs)
 
-@app.route("/api/v1.0/<start_date>")
+@app.route("/api/v1.0/<start>")
 def Start_date(start_date):
     # Create our session (link) from Python to the DB
     session = Session(engine)
@@ -138,7 +138,7 @@ def Start_date(start_date):
         start_date_tobs.append(start_date_tobs_dict) 
     return jsonify(start_date_tobs)
 
-@app.route("/api/v1.0/<start_date>/<end_date>")
+@app.route("/api/v1.0/<start>/<end>")
 def Start_end_date(start_date, end_date):
     # Create our session (link) from Python to the DB
     session = Session(engine)

@@ -40,7 +40,9 @@ def welcome():
         f"Available Routes:<br/>"
         f"/api/v1.0/precipitation:<br/>"
         f"/api/v1.0/stations:<br/>"
-        f"/api/v1.0/tobs:"
+        f"/api/v1.0/tobs:<br/>"
+        f"/api/v1.0/[start_date format:yyyy-mm-dd]<br/>"
+        f"/api/v1.0/[start_date format:yyyy-mm-dd]/[end_date format:yyyy-mm-dd]<br/>"
     )
 
 
@@ -84,24 +86,52 @@ def stations():
         all_stations.append(stations_dict)
     
     return jsonify(all_stations)
-
-@app.route("/api/v1.0/tobs")
-def tobs():
+@app.route("/api/v1.0/<start_date>")
+def Start_date(start_date):
+    # Create our session (link) from Python to the DB
     session = Session(engine)
-    lateststr = session.query(Measurement.date).order_by(Measurement.date.desc()).first()[0]
-    latestdate = dt.datetime.strptime(lateststr, '%Y-%m-%d')
-    querydate = dt.date(latestdate.year -1, latestdate.month, latestdate.day)
-    sel = [Measurement.date,Measurement.tobs]
-    queryresult = session.query(*sel).filter(Measurement.date >= querydate).all()
+
+    """Return a list of min, avg and max tobs for a start date"""
+    # Query all tobs
+
+    results = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
+                filter(Measurement.date >= start_date).all()
+
     session.close()
 
-    tobsall = []
-    for date, tobs in queryresult:
-        tobs_dict = {}
-        tobs_dict["Date"] = date
-        tobs_dict["Tobs"] = tobs
-        tobsall.append(tobs_dict)
+    # Create a dictionary from the row data and append to a list of start_date_tobs
+    start_date_tobs = []
+    for min, avg, max in results:
+        start_date_tobs_dict = {}
+        start_date_tobs_dict["min_temp"] = min
+        start_date_tobs_dict["avg_temp"] = avg
+        start_date_tobs_dict["max_temp"] = max
+        start_date_tobs.append(start_date_tobs_dict) 
+    return jsonify(start_date_tobs)
 
-    return jsonify(tobsall)
+@app.route("/api/v1.0/<start_date>/<end_date>")
+def Start_end_date(start_date, end_date):
+    # Create our session (link) from Python to the DB
+    session = Session(engine)
+
+    """Return a list of min, avg and max tobs for start and end dates"""
+    # Query all tobs
+
+    results = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
+                filter(Measurement.date >= start_date).filter(Measurement.date <= end_date).all()
+
+    session.close()
+  
+    # Create a dictionary from the row data and append to a list of start_end_date_tobs
+    start_end_tobs = []
+    for min, avg, max in results:
+        start_end_tobs_dict = {}
+        start_end_tobs_dict["min_temp"] = min
+        start_end_tobs_dict["avg_temp"] = avg
+        start_end_tobs_dict["max_temp"] = max
+        start_end_tobs.append(start_end_tobs_dict) 
+    
+
+    return jsonify(start_end_tobs)
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,0 +1,8 @@
+[
+  {
+    "avg_temp": null, 
+    "max_temp": null, 
+    "min_temp": null
+  }
+]
+
